@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Marina Prestígio's Game</title>
+    <style>
+        html, body {
+            height: 100%;
+            background-color: white;
+        }
+        img {
+           position: absolute; 
+           display: none;
+        }
+        img.marina {
+            right: 0;
+            bottom: 0;
+            margin: 10px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <button>Começar!</button>    
+    
+    <img src="prestigio.png" class="prestigio">
+    <audio src="prestigio.mp3"></audio>
+    <img src="marina.jpg" class="marina">
+
+    <script>
+        const img = document.querySelector('img.prestigio');
+        const marina = document.querySelector('img.marina');
+        const audio = document.querySelector('audio');
+        const bt = document.querySelector('button');
+       
+        const width = window.innerWidth - 400;
+        const height = window.innerHeight - 200;
+        
+        let speed = 1;
+        let size = 50;
+        let hits = 0;
+        let x = 0;
+        let y = 0;
+
+        bt.addEventListener('click', function() {
+            speed = 1;
+            hits = 0;
+            gameloop();
+        });
+
+        audio.addEventListener('ended', function() {
+            marina.style.display = 'none';
+        });
+
+        img.addEventListener('click', function() {
+            
+            hits++;
+            if (hits % 5 === 0) {
+                size--;
+                img.style.width = `${size}%`
+                speed++;
+            }
+            marina.style.display = 'block';
+            audio.play();
+        });
+    
+        const gameloop = function() {
+            img.style.display = 'block';
+            x = Number.parseInt(Math.random() * width);
+            y = Number.parseInt(Math.random() * height);
+            img.style.left = `${x}px`;
+            img.style.top = `${y}px`;
+            setTimeout(gameloop, 1000 / speed);
+        };
+
+        //gameloop();
+    </script>
+</body>
+</html>
